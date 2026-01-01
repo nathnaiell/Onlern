@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Onlearn Ethiopia - Online Learning Platform</title>
+  <meta name="description" content="Empowering Ethiopian students through online learning">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <link rel="icon" href="ret.png">
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="bacK.css">
+  <link rel="stylesheet" href="basa.css">
+  <link rel="stylesheet" href="baes.css">
+  <link rel="stylesheet" href="bads.css">
+  <link rel="stylesheet" href="m.css">
+  <link rel="stylesheet" href="mo.css">
+  <link rel="stylesheet" href="dar.css">
+  <style>/* Profile Edit Modal Scroll Styling */
+.tyu {
+  width: 100%;
+  height: 100%;
+}
+
+.tyu .auth-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+}
+
+.tyu .auth-container {
+  width: 100%;
+  max-width: 500px;
+  max-height: 103vh;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-hover);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: modalFadeIn 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.tyu .auth-header {
+  background: linear-gradient(90deg, var(--primary), var(--primary-light));
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.tyu .auth-body {
+  padding: 2rem;
+  overflow-y: auto;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Custom scrollbar for profile modal */
+.tyu .auth-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tyu .auth-body::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin: 4px 0;
+}
+
+.tyu .auth-body::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 10px;
+  transition: var(--transition);
+}
+
+.tyu .auth-body::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+  transform: scale(1.1);
+}
+
+/* Profile form styling */
+.tyu .profile-avatar-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.tyu .image-scroll {
+  max-height: 150px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 3px solid var(--primary-light);
+}
+
+.tyu .profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  transition: var(--transition);
+}
+
+.tyu .profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.tyu .avatar-edit-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+}
+
+.tyu .avatar-edit-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: var(--shadow-hover);
+}
+
+.tyu .avatar-options {
+  position: absolute;
+  bottom: 60px;
+  right: 0;
+  background: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-hover);
+  padding: 0.5rem;
+  z-index: 10;
+  min-width: 180px;
+  border: 1px solid var(--glass-border);
+}
+
+.tyu .avatar-option-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  color: var(--dark);
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+  text-align: left;
+  border-radius: 8px;
+}
+
+.tyu .avatar-option-btn:hover {
+  background: rgba(20, 126, 62, 0.08);
+}
+
+.tyu .avatar-option-btn i {
+  width: 20px;
+  text-align: center;
+}
+
+/* Smooth fade in/out for avatar options */
+.tyu .avatar-options {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Form styling for profile */
+.tyu .form-group.text-center {
+  text-align: center;
+}
+
+.tyu textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  max-height: 200px;
+  font-family: 'Inter', sans-serif;
+  line-height: 1.5;
+}
+
+/* Responsive design for profile modal */
+@media (max-width: 768px) {
+  .tyu .auth-container {
+    max-width: 90%;
+    max-height: 85vh;
+    margin: 1rem;
+  }
+  
+  .tyu .auth-body {
+    padding: 1.5rem;
+  }
+  
+  .tyu .profile-avatar {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .tyu .image-scroll {
+    max-height: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .tyu .auth-container {
+    max-width: 95%;
+    max-height: 80vh;
+  }
+  
+  .tyu .auth-body {
+    padding: 1.25rem;
+  }
+  
+  .tyu .profile-avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .tyu .image-scroll {
+    max-height: 100px;
+  }
+  
+  .tyu .avatar-edit-btn {
+    width: 35px;
+    height: 35px;
+    bottom: 5px;
+    right: 5px;
+  }
+  
+  .tyu .avatar-options {
+    min-width: 160px;
+    bottom: 50px;
+  }
+}
+
+/* Prevent background scrolling when modal is open */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Loading animation for profile save */
+.tyu .spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.tyu #profileSpinner {
+  display: none;
+}
+
+/* Success animation */
+.tyu .success-animation {
+  display: none;
+  text-align: center;
+  padding: 1rem;
+  color: var(--primary);
+  animation: fadeIn 0.5s ease-out;
+}
+
+.tyu .success-animation i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  animation: bounce 0.5s ease-in-out;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Form validation styles */
+.tyu .form-control:valid {
+  border-color: #28a745;
+}
+
+.tyu .form-control:invalid:focus {
+  border-color: var(--error);
+}
+
+/* Focus styles for better accessibility */
+.tyu .avatar-option-btn:focus-visible,
+.tyu .avatar-edit-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Transition for modal content */
+.tyu .auth-container {
+  transform-origin: center center;
+  transition: transform 0.3s ease-out;
+}
+
+.tyu .auth-container:focus-within {
+  transform: scale(1.01);
+}</style>
+</head>
+<body>
+  <!-- Modern Loader -->
+  <div id="loader" class="loader-container">
+    <div class="loader-content">
+      <div class="loader-logo">Onlearn Ethiopia</div>
+      <div class="loader-animation">
+        <div class="loader-dot"></div>
+        <div class="loader-not"></div>
+        <div class="loader-bot"></div>
+      </div>
+      <div class="progress-loader">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="loader-text">Loading educational resources...</div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Help Modal -->
+  <div class="keyboard-help-modal" id="keyboardHelpModal">
+    <div class="keyboard-help-container">
+      <div class="keyboard-help-header">
+        <h2>Keyboard Shortcuts</h2>
+        <button class="keyboard-help-close" id="closeKeyboardHelp">&times;</button>
+      </div>
+      <div class="keyboard-shortcuts-list">
+        <div class="keyboard-shortcut-item">
+          <span>Toggle Sidebar</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 1</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Open Profile</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 2</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Logout</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 3</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Refresh Page</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 4</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Learning Media</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 5</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>ICT Lab</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 6</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Assignments</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 7</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Digital Library</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 8</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Study Materials</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 9</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Practice Quizzes</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + 0</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Live Classes</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + L</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Game Center</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + G</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Search</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + K</kbd>
+        </div>
+        <div class="keyboard-shortcut-item">
+          <span>Show Help</span>
+          <kbd class="keyboard-shortcut-key">Ctrl + ?</kbd>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+
+
+
+  <!-- Sidebar Toggle Button -->
+  <div class="sidebar-toggle" id="sidebarToggle" tabindex="-1" role="button" aria-disabled="false" style="--hover-size: 34px; width: 16px; height: 16px;"><div class="ds-icon-button__hover-bg"></div><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M9.67269 0.522888C10.8339 0.522888 11.7599 0.522762 12.4963 0.602541C13.2453 0.683705 13.8789 0.854296 14.4263 1.25202C14.7504 1.48744 15.0354 1.77252 15.2709 2.09654C15.6686 2.64398 15.8392 3.27762 15.9203 4.0266C16.0001 4.76295 16 5.689 16 6.85019V9.14991C16 10.3111 16.0001 11.2372 15.9203 11.9735C15.8392 12.7225 15.6686 13.3561 15.2709 13.9036C15.0354 14.2276 14.7504 14.5127 14.4263 14.7481C13.8789 15.1458 13.2453 15.3164 12.4963 15.3976C11.7599 15.4773 10.8339 15.4772 9.67269 15.4772H6.32727C5.16608 15.4772 4.24003 15.4773 3.50368 15.3976C2.75471 15.3164 2.12106 15.1458 1.57363 14.7481C1.2496 14.5127 0.964519 14.2276 0.7291 13.9036C0.331377 13.3561 0.160786 12.7225 0.0796224 11.9735C-0.000156655 11.2372 -3.05163e-05 10.3111 -3.05163e-05 9.14991V6.85019C-3.05163e-05 5.689 -0.000156655 4.76295 0.0796224 4.0266C0.160786 3.27762 0.331377 2.64398 0.7291 2.09654C0.964519 1.77252 1.2496 1.48744 1.57363 1.25202C2.12106 0.854296 2.75471 0.683705 3.50368 0.602541C4.24003 0.522762 5.16608 0.522888 6.32727 0.522888H9.67269ZM5.543 1.8872V14.1119C5.78633 14.1128 6.04706 14.117 6.32727 14.117H9.67269C10.8639 14.117 11.7032 14.1165 12.3492 14.0465C12.9824 13.9779 13.3497 13.8495 13.6267 13.6483C13.8354 13.4967 14.0195 13.3126 14.171 13.104C14.3722 12.8269 14.5007 12.4596 14.5693 11.8265C14.6393 11.1804 14.6398 10.3411 14.6398 9.14991V6.85019C14.6398 5.65901 14.6393 4.81972 14.5693 4.17365C14.5007 3.54053 14.3722 3.17323 14.171 2.89614C14.0195 2.68752 13.8354 2.50341 13.6267 2.35184C13.3497 2.15065 12.9824 2.02217 12.3492 1.95358C11.7032 1.88362 10.8639 1.88311 9.67269 1.88311H6.32727C6.04706 1.88311 5.78633 1.88625 5.543 1.8872ZM4.18277 1.91171C3.99122 1.92164 3.81477 1.93582 3.65073 1.95358C3.01761 2.02217 2.65031 2.15065 2.37322 2.35184C2.1646 2.50341 1.98049 2.68752 1.82892 2.89614C1.62773 3.17323 1.49925 3.54053 1.43066 4.17365C1.36071 4.81972 1.3602 5.65901 1.3602 6.85019V9.14991C1.3602 10.3411 1.36071 11.1804 1.43066 11.8265C1.49925 12.4596 1.62773 12.8269 1.82892 13.104C1.98049 13.3126 2.1646 13.4967 2.37322 13.6483C2.65031 13.8495 3.01761 13.9779 3.65073 14.0465C3.81475 14.0643 3.99124 14.0774 4.18277 14.0874V1.91171Z" fill="currentColor"></path></svg></div></div>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header"> 
+      <h3><abbr title="sidebar">Onlearn Ethiopia</abbr></h3>
+      <button class="close-sidebar" id="closeSidebar">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="sidebar-menu">
+      <div class="sidebar-section-title">Main Menu</div>
+      
+      <a href="base.html" class="sidebar-item active">
+        <i class="fas fa-home sidebar-icon"></i>
+        <span>Home</span>
+      </a>
+      
+      <a href="media.html" class="sidebar-item">
+        <i class="fas fa-photo-video sidebar-icon"></i>
+        <span>Learning Media</span>
+      </a>
+      
+      <a href="ict.html" class="sidebar-item">
+        <i class="fas fa-laptop-code sidebar-icon"></i>
+        <span>ICT Lab</span>
+      </a>
+      
+      <a href="ass.html" class="sidebar-item">
+        <i class="fas fa-tasks sidebar-icon"></i>
+        <span>Assignments</span>
+      </a>
+      
+      <a href="lib.html" class="sidebar-item">
+        <i class="fas fa-book-open sidebar-icon"></i>
+        <span>Digital Library</span>
+      </a>
+      
+      <div class="sidebar-divider"></div>
+      
+      <div class="sidebar-section-title">Tools & Resources</div>
+      
+      <a href="materials.html" class="sidebar-item">
+        <i class="fas fa-ruler sidebar-icon"></i>
+        <span>Study Materials</span>
+      </a>
+      
+      <a href="quizzz.html" class="sidebar-item">
+        <i class="fas fa-question-circle sidebar-icon"></i>
+        <span>Practice Quizzes</span>
+      </a>
+      
+      <a href="livve.html" class="sidebar-item">
+        <i class="fas fa-video sidebar-icon"></i>
+        <span>Live Classes</span>
+          <div class="live-dot"></div>
+        </div>
+      </a>
+      
+      <a href="games.html" class="sidebar-item">
+        <i class="fas fa-gamepad sidebar-icon"></i>
+        <span>Game Center</span>
+      </a>
+      
+
+
+      <div class="sidebar-divider"></div>
+      
+      <div class="sidebar-section-title">Account</div>
+      
+      <a href="#" class="sidebar-item" id="sidebarProfileLink">
+        <i class="fas fa-user sidebar-icon"></i>
+        <abbr title="Profile"><span>Profile</span></abbr>
+      </a>
+      
+      <a href="#" class="sidebar-item" id="sidebarLogoutBtn">
+        <i class="fas fa-sign-out-alt sidebar-icon"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+
+
+
+  
+  <div class="floating-circles"> 
+    <div class="circle"></div>
+  </div>
+  <!-- Landing Page Content -->
+  <div class="landing-container" id="landingPage">
+    <header>
+      <div class="auth-buttons">
+        <a href="#" class="header-auth-btn login-btn" id="openLoginModal">Login</a>
+        <a href="#" class="header-auth-btn signup-btn" id="openSignupModal">Sign Up</a>
+      </div>
+      
+      <a href="base.html" class="back-btn">
+        <i class="fas fa-refresh"></i>
+        Refresh
+      </a>
+
+      <!-- Enhanced User Profile Dropdown -->
+      <div class="user-profile">
+        <div class="user-account-dropdown">
+          <button class="user-account-toggle">
+            <img src="https://ui-avatars.com/api/?name=User+Name&background=147E3E&color=fff" alt="User Avatar" class="user-avatar" id="userAvatar">
+            <span class="user-name" id="userName">User Name</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          <div class="user-account-menu">
+            <a href="#" class="account-menu-item" id="profileLink">
+              <i class="fas fa-user"></i>
+              <span>Profile</span>
+            </a>
+            <a href="#" class="account-menu-item" id="logoutBtn">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      
+      <h1>Onlearn Ethiopia</h1>
+      <p class="subtitle">Online learning Ethiopian Students</p>
+      <p class="welcome-message" id="welcomeMessage"></p>
+    </header>
+    
+    <div class="search-container">
+      <div class="search-bar">
+        <input type="text" class="search-input" placeholder="Search for courses, materials, or resources..." id="searchInput">
+        <button class="search-btn" id="searchBtn">
+          <i class="fas fa-search"></i>
+          <span>Search</span>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <!-- Results will be populated by JavaScript -->
+      </div>
+    </div>
+    
+    <div class="link-list">
+      <a href="media.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-photo-video"></i></div>
+        <h3 class="link-title">Learning Media</h3>
+        <p class="link-desc">Access educational videos, images and audio materials</p>
+      </a>
+      
+      <a href="ict.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-laptop-code"></i></div>
+        <h3 class="link-title">ICT Lab</h3>
+        <p class="link-desc">Practice coding with HTML, CSS, JavaScript and C++</p>
+      </a>
+      
+      <a href="ass.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-tasks"></i></div>
+        <h3 class="link-title">Assignments</h3>
+        <p class="link-desc">Submit and track your coursework assignments</p>
+      </a>
+      
+      <a href="lib.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-book-open"></i></div>
+        <h3 class="link-title">Digital Library</h3>
+        <p class="link-desc">Access textbooks and reference materials</p>
+      </a>
+
+      <a href="materials.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-ruler"></i></div>
+        <h3 class="link-title">Study Materials</h3>
+        <p class="link-desc">Access calculator, notepad and other tools</p>
+      </a>
+      
+      <a href="quizzz.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-question-circle"></i></div>
+        <h3 class="link-title">Practice Quizzes</h3>
+        <p class="link-desc">Test your knowledge with interactive quizzes</p>
+      </a>
+
+    <a href="livve.html" class="link-card">
+  <div class="link-icon">
+    <i class="fas fa-video"></i>
+    <div class="live-dogt" id="liveStatusDot"></div>
+  </div>
+  <h3 class="link-title">Live Classes</h3>
+  <p class="link-desc">Join live classes by Meet or Zoom</p>
+</a>
+
+      <a href="games.html" class="link-card">
+        <div class="link-icon"><i class="fas fa-gamepad"></i></div>
+        <h3 class="link-title">Game Center</h3>
+        <p class="link-desc">Relax with games</p>
+      </a>
+    </div>
+
+   
+      
+      
+  <!-- Authentication Modal -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-container">
+      <div class="auth-header">
+        <button class="close-modal" id="closeModal">&times;</button>
+        <h2 id="authHeaderText">Welcome to Onlearn Ethiopia</h2>
+      </div>
+
+       <div class="scrollable">
+      <div class="auth-body">
+        <div class="auth-tabs">
+          <div class="auth-tab active" data-tab="login" id="loginTabBtn">Login</div>
+              <div class="auth-tab" data-tab="signup" id="signupTabBtn">Sign Up</div>
+        </div>
+       
+
+        <!-- Login Form -->
+        <div class="auth-content active" id="loginTab">
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="loginEmail">Username or Email</label>
+              <input type="text" id="loginEmail" class="form-control" placeholder="Enter your username or email" required>
+              <div class="error-message" id="loginEmailError"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="loginPassword">Password</label>
+              <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+              <i class="fas fa-eye password-toggle" id="toggleLoginPassword"></i>
+              <div class="error-message" id="loginPasswordError"></div>
+            </div>
+            
+            <div class="form-group" style="text-align: right;">
+              <a href="#" class="auth-link" id="forgotPasswordLink">Forgot password?</a>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+              <span id="loginBtnText">Log In</span>
+              <div class="spinner" id="loginSpinner"></div>
+            </button>
+          </form>
+          
+          <div class="divider">or continue with</div>
+          
+          <div class="social-auth">
+            <button class="social-btn google" id="googleLogin">
+              <i class="fab fa-google"></i> Google
+            </button>
+            <button class="social-btn apple" id="appleLogin">
+              <i class="fab fa-apple"></i> Apple
+            </button>
+          </div>
+          
+          <div class="auth-footer">
+            Don't have an account? <a href="#" class="auth-link" id="showSignupLink">Sign up</a>
+          </div>
+        </div>
+        
+        <!-- Signup Form -->
+        <div class="auth-content" id="signupTab">
+          <form id="signupForm">
+            <div class="form-group">
+              <label for="signupFullName">Full Name</label>
+              <input type="text" id="signupFullName" class="form-control" placeholder="Enter your full name" required>
+              <div class="error-message" id="signupFullNameError"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupEmail">Email</label>
+              <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+              <div class="error-message" id="signupEmailError"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupPassword">Password</label>
+              <input type="password" id="signupPassword" class="form-control" placeholder="Create a password (min 8 characters)" required>
+              <i class="fas fa-eye password-toggle" id="toggleSignupPassword"></i>
+              <div class="password-strength">
+                <div class="password-strength-bar" id="passwordStrengthBar"></div>
+              </div>
+              <div class="error-message" id="signupPasswordError"></div>
+            </div>
+            
+            <div class="form-group">
+              <label for="signupConfirmPassword">Confirm Password</label>
+              <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+              <i class="fas fa-eye password-toggle" id="toggleConfirmPassword"></i>
+              <div class="error-message" id="signupConfirmPasswordError"></div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+              <span id="signupBtnText">Create Account</span>
+              <div class="spinner" id="signupSpinner"></div>
+            </button>
+          </form>
+          
+          <div class="verification-container" id="verificationContainer">
+            <h3>Verify Your Email</h3>
+            <p>We've sent a 6-digit code to <span id="verificationEmail"></span></p>
+            
+            <div class="verification-inputs">
+              <input type="text" class="verification-input" maxlength="1" data-index="0" inputmode="numeric" pattern="[0-9]*">
+              <input type="text" class="verification-input" maxlength="1" data-index="1" inputmode="numeric" pattern="[0-9]*">
+              <input type="text" class="verification-input" maxlength="1" data-index="2" inputmode="numeric" pattern="[0-9]*">
+              <input type="text" class="verification-input" maxlength="1" data-index="3" inputmode="numeric" pattern="[0-9]*">
+              <input type="text" class="verification-input" maxlength="1" data-index="4" inputmode="numeric" pattern="[0-9]*">
+              <input type="text" class="verification-input" maxlength="1" data-index="5" inputmode="numeric" pattern="[0-9]*">
+            </div>
+            
+            <button type="button" class="btn btn-primary" id="verifyBtn">
+              <span id="verifyBtnText">Verify</span>
+              <div class="spinner" id="verifySpinner"></div>
+            </button>
+            
+            <p class="resend-code">
+              Didn't receive code? <a href="#" class="resend-link" id="resendCode">Resend</a>
+            </p>
+            <div class="success-message" id="resendSuccess">Code resent successfully!</div>
+          </div>
+          
+          <div class="divider">or continue with</div>
+          
+          <div class="social-auth">
+            <button class="social-btn google" id="googleSignup">
+              <i class="fab fa-google"></i> Google
+            </button>
+            <button class="social-btn apple" id="appleSignup">
+              <i class="fab fa-apple"></i> Apple
+            </button>
+          </div>
+          
+          <div class="auth-footer">
+            Already have an account? <a href="#" class="auth-link" id="showLoginLink">Log in</a>
+          </div>
+        </div>
+        
+        <!-- Forgot Password Form -->
+        <div class="auth-content" id="forgotPasswordTab">
+          <form id="forgotPasswordForm">
+            <div class="form-group">
+              <label for="forgotEmail">Email</label>
+              <input type="email" id="forgotEmail" class="form-control" placeholder="Enter your email" required>
+              <div class="error-message" id="forgotEmailError"></div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">
+              <span id="forgotBtnText">Send Reset Link</span>
+              <div class="spinner" id="forgotSpinner"></div>
+            </button>
+            
+            <div class="success-message" id="forgotSuccess"></div>
+          </form>
+          
+          <div class="auth-footer">
+            Remember your password? <a href="#" class="auth-link" id="backToLoginLink">Log in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+         <div class="tyu">
+  <div class="auth-modal" id="profileModal">
+    <div class="auth-container">
+      <div class="auth-header">
+        <button class="close-modal" id="closeProfileModal">&times;</button>
+        <h2>Your Profile</h2>
+      </div>
+      
+      <div class="auth-body">
+        <form id="profileForm">
+          <div class="form-group text-center">
+            <div class="profile-avatar-container">
+              <div class="image-scroll"><img src="https://ui-avatars.com/api/?name=User+Name&background=147E3E&color=fff" alt="User Avatar" class="profile-avatar" id="profileAvatar"></div>
+              <input type="file" id="avatarUpload" accept="image/*" style="display: none;">
+              <button type="button" class="avatar-edit-btn" id="changeAvatarBtn">
+                <i class="fas fa-camera"></i>
+              </button>
+              <div class="avatar-options" id="avatarOptions" style="display: none;">
+                <button type="button" class="avatar-option-btn" id="uploadAvatarBtn">
+                  <i class="fas fa-upload"></i> Upload Photo
+                </button>
+                <button type="button" class="avatar-option-btn" id="removeAvatarBtn">
+                  <i class="fas fa-trash"></i> Remove Photo
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="profileFullName">Full Name</label>
+            <input type="text" id="profileFullName" class="form-control" placeholder="Enter your full name" required>
+            <div class="error-message" id="profileFullNameError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="profileEmail">Email</label>
+            <input type="email" id="profileEmail" class="form-control" placeholder="Enter your email" required>
+            <div class="error-message" id="profileEmailError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="profileUsername">Username</label>
+            <input type="text" id="profileUsername" class="form-control" placeholder="Enter your username" required>
+            <div class="error-message" id="profileUsernameError"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="profileBio">Bio (Optional)</label>
+            <textarea id="profileBio" class="form-control" placeholder="Tell us about yourself" rows="3"></textarea>
+          </div>
+          
+          <button type="submit" class="btn btn-primary">
+            <span id="profileBtnText">Save Changes</span>
+            <div class="spinner" id="profileSpinner"></div>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+         </div>
+  <!-- Cropper Modal (Added to HTML directly with proper IDs) -->
+  <div class="cropper-modal" id="cropperModal">
+    <div class="cropper-container">
+      <div class="cropper-preview" id="cropperPreview"></div>
+      <div class="cropper-actions">
+        <button class="avatar-action-btn avatar-cancel-btn" id="cropperCancel">Cancel</button>
+        <button class="avatar-action-btn avatar-save-btn" id="cropperSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script>
+    // Modern loader functionality
+    window.addEventListener('load', function() {
+      const loader = document.getElementById('loader');
+      
+      // Add fade-out class to start the fade animation
+      loader.classList.add('fade-out');
+      
+      // Remove the loader from DOM after animation completes
+      setTimeout(function() {
+        loader.style.display = 'none';
+      }, 500);
+    });
+
+    // Sidebar functionality
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const sidebarProfileLink = document.getElementById('sidebarProfileLink');
+    const sidebarLogoutBtn = document.getElementById('sidebarLogoutBtn');
+
+    // Toggle sidebar
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.add('active');
+      sidebarOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close sidebar
+    function closeSidebarFunc() {
+      sidebar.classList.remove('active');
+      sidebarOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    closeSidebar.addEventListener('click', closeSidebarFunc);
+    sidebarOverlay.addEventListener('click', closeSidebarFunc);
+
+    // Close sidebar with Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+        closeSidebarFunc();
+      }
+    });
+
+    // Sidebar navigation links
+    sidebarProfileLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeSidebarFunc();
+      document.getElementById('profileLink').click();
+    });
+
+    sidebarLogoutBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeSidebarFunc();
+      logoutBtn.click();
+    });
+
+    // Update active sidebar item based on current page
+    function updateActiveSidebarItem() {
+      const currentPage = window.location.pathname.split('/').pop() || 'base.html';
+      const sidebarItems = document.querySelectorAll('.sidebar-item');
+      
+      sidebarItems.forEach(item => {
+        item.classList.remove('active');
+        const href = item.getAttribute('href');
+        if (href === currentPage) {
+          item.classList.add('active');
+        }
+      });
+    }
+
+    // Initialize sidebar on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateActiveSidebarItem();
+      
+      // Check if user is logged in
+      checkLoginStatus();
+    });
+
+    // Function to check if user is logged in and show/hide sidebar
+    function checkLoginStatus() {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      const username = localStorage.getItem('username');
+      
+      if (isLoggedIn && username) {
+        // User is logged in, show sidebar and toggle button
+        sidebar.style.display = 'block';
+        sidebarToggle.style.display = 'flex';
+        
+        // Update welcome message
+        document.getElementById('welcomeMessage').textContent = `Welcome back, ${username}!`;
+        
+        // Hide auth buttons, show user profile
+        document.querySelector('.auth-buttons').style.display = 'none';
+        document.querySelector('.user-profile').style.display = 'block';
+        
+        // Update user name and avatar
+        const userFullName = localStorage.getItem('userFullName') || username;
+        document.getElementById('userName').textContent = userFullName;
+        
+        const userAvatar = localStorage.getItem('userAvatar');
+        if (userAvatar) {
+          document.getElementById('userAvatar').src = userAvatar;
+        } else {
+          const initials = userFullName.split(' ').map(name => name[0]).join('').toUpperCase();
+          document.getElementById('userAvatar').src = `https://ui-avatars.com/api/?name=${initials}&background=147E3E&color=fff`;
+        }
+      } else {
+        // User is not logged in, hide sidebar and toggle button
+        sidebar.style.display = 'none';
+        sidebarToggle.style.display = 'none';
+        
+        // Show auth buttons, hide user profile
+        document.querySelector('.auth-buttons').style.display = 'flex';
+        document.querySelector('.user-profile').style.display = 'none';
+        
+        // Clear welcome message
+        document.getElementById('welcomeMessage').textContent = '';
+      }
+    }
+
+    // Profile image functionality
+    const profileModal = document.getElementById('profileModal');
+    const closeProfileModal = document.getElementById('closeProfileModal');
+    const profileForm = document.getElementById('profileForm');
+    const profileAvatar = document.getElementById('profileAvatar');
+    const changeAvatarBtn = document.getElementById('changeAvatarBtn');
+    const avatarOptions = document.getElementById('avatarOptions');
+    const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
+    const removeAvatarBtn = document.getElementById('removeAvatarBtn');
+    const avatarUpload = document.getElementById('avatarUpload');
+    const cropperModal = document.getElementById('cropperModal');
+    const cropperCancel = document.getElementById('cropperCancel');
+    const cropperSave = document.getElementById('cropperSave');
+    const cropperPreview = document.getElementById('cropperPreview');
+
+    let cropper = null;
+    let currentAvatarFile = null;
+
+    // Open profile modal
+    document.getElementById('profileLink').addEventListener('click', function(e) {
+      e.preventDefault();
+      profileModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      
+      // Load user data
+      const username = localStorage.getItem('username');
+      const userFullName = localStorage.getItem('userFullName');
+      const userAvatar = localStorage.getItem('userAvatar');
+      
+      document.getElementById('profileUsername').value = username || '';
+      document.getElementById('profileFullName').value = userFullName || '';
+      document.getElementById('profileEmail').value = localStorage.getItem('userEmail') || '';
+      document.getElementById('profileBio').value = localStorage.getItem('userBio') || '';
+      
+      if (userAvatar) {
+        profileAvatar.src = userAvatar;
+      }
+    });
+
+    // Close profile modal
+    closeProfileModal.addEventListener('click', function() {
+      profileModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    profileModal.addEventListener('click', function(e) {
+      if (e.target === profileModal) {
+        profileModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+      }
+    });
+
+    // Toggle avatar options
+    changeAvatarBtn.addEventListener('click', function() {
+      avatarOptions.style.display = avatarOptions.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Upload avatar button
+    uploadAvatarBtn.addEventListener('click', function() {
+      avatarUpload.click();
+      avatarOptions.style.display = 'none';
+    });
+
+    // Remove avatar button
+    removeAvatarBtn.addEventListener('click', function() {
+      profileAvatar.src = 'https://ui-avatars.com/api/?name=User&background=147E3E&color=fff';
+      localStorage.removeItem('userAvatar');
+      avatarOptions.style.display = 'none';
+      
+      // Update main avatar
+      const userAvatarElement = document.querySelector('.user-avatar');
+      if (userAvatarElement) {
+        const username = localStorage.getItem('username') || 'User';
+        userAvatarElement.src = `https://ui-avatars.com/api/?name=${username}&background=147E3E&color=fff`;
+      }
+    });
+
+    // Handle file selection
+    avatarUpload.addEventListener('change', function(e) {
+      if (e.target.files && e.target.files[0]) {
+        currentAvatarFile = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(event) {
+          cropperModal.style.display = 'flex';
+          
+          // Initialize cropper
+          const image = document.createElement('img');
+          image.id = 'cropperImage';
+          image.src = event.target.result;
+          cropperPreview.innerHTML = '';
+          cropperPreview.appendChild(image);
+          
+          setTimeout(() => {
+            cropper = new Cropper(image, {
+              aspectRatio: 1,
+              viewMode: 1,
+              guides: true
+            });
+          }, 100);
+        };
+        
+        reader.readAsDataURL(e.target.files[0]);
+      }
+    });
+
+    // Cancel cropping
+    cropperCancel.addEventListener('click', function() {
+      cropperModal.style.display = 'none';
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
+      }
+    });
+
+    // Save cropped image
+    cropperSave.addEventListener('click', function() {
+      if (cropper) {
+        const canvas = cropper.getCroppedCanvas({
+          width: 300,
+          height: 300
+        });
+        
+        const croppedImage = canvas.toDataURL('image/jpeg');
+        profileAvatar.src = croppedImage;
+        
+        // Save to localStorage
+        localStorage.setItem('userAvatar', croppedImage);
+        
+        // Update main avatar
+        const userAvatarElement = document.querySelector('.user-avatar');
+        if (userAvatarElement) {
+          userAvatarElement.src = croppedImage;
+        }
+        
+        cropperModal.style.display = 'none';
+        cropper.destroy();
+        cropper = null;
+      }
+    });
+
+    // Save profile form
+    profileForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const fullName = document.getElementById('profileFullName').value;
+      const email = document.getElementById('profileEmail').value;
+      const username = document.getElementById('profileUsername').value;
+      const bio = document.getElementById('profileBio').value;
+      
+      // Show loading state
+      document.getElementById('profileBtnText').style.display = 'none';
+      document.getElementById('profileSpinner').style.display = 'block';
+      
+      // Simulate API call
+      setTimeout(() => {
+        // Save to localStorage
+        localStorage.setItem('userFullName', fullName);
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('username', username);
+        localStorage.setItem('userBio', bio);
+        
+        // Update UI
+        document.getElementById('userName').textContent = fullName || username;
+        welcomeMessage.textContent = `Welcome back, ${username}!`;
+        
+        // Update avatar with initials if no custom avatar
+        if (!localStorage.getItem('userAvatar')) {
+          const initials = (fullName || username).split(' ').map(name => name[0]).join('').toUpperCase();
+          profileAvatar.src = `https://ui-avatars.com/api/?name=${initials}&background=147E3E&color=fff`;
+          
+          const userAvatarElement = document.querySelector('.user-avatar');
+          if (userAvatarElement) {
+            userAvatarElement.src = `https://ui-avatars.com/api/?name=${initials}&background=147E3E&color=fff`;
+          }
+        }
+        
+        // Hide loading state
+        document.getElementById('profileBtnText').style.display = 'inline';
+        document.getElementById('profileSpinner').style.display = 'none';
+        
+        // Close modal
+        profileModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }, 1000);
+    });
+
+    // Load user avatar on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const userAvatar = localStorage.getItem('userAvatar');
+      const userAvatarElement = document.querySelector('.user-avatar');
+      
+      if (userAvatar && userAvatarElement) {
+        userAvatarElement.src = userAvatar;
+      }
+    });
+
+    // Login functionality
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      
+      // Show loading state
+      document.getElementById('loginBtnText').style.display = 'none';
+      document.getElementById('loginSpinner').style.display = 'block';
+      
+      // Simulate API call
+      setTimeout(() => {
+        // Save login state
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('username', email.split('@')[0]);
+        localStorage.setItem('userEmail', email);
+        
+        // Hide loading state
+        document.getElementById('loginBtnText').style.display = 'inline';
+        document.getElementById('loginSpinner').style.display = 'none';
+        
+        // Close modal
+        document.getElementById('authModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Update UI to show user is logged in
+        checkLoginStatus();
+      }, 1500);
+    });
+
+    // Logout functionality
+    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Clear login state
+      localStorage.setItem('isLoggedIn', 'false');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userEmail');
+      localStorage.removeItem('userFullName');
+      localStorage.removeItem('userBio');
+      
+      // Update UI to show user is logged out
+      checkLoginStatus();
+      
+      // Close sidebar if open
+      closeSidebarFunc();
+    });
+
+    // Keyboard shortcuts functionality
+    const keyboardHelpModal = document.getElementById('keyboardHelpModal');
+    const closeKeyboardHelp = document.getElementById('closeKeyboardHelp');
+
+    // Function to toggle sidebar
+    function toggleSidebar() {
+      if (sidebar.classList.contains('active')) {
+        closeSidebarFunc();
+      } else {
+        sidebarToggle.click();
+      }
+    }
+
+    // Function to open profile
+    function openProfile() {
+      document.getElementById('profileLink').click();
+    }
+
+    // Function to logout
+    function logout() {
+      document.getElementById('logoutBtn').click();
+    }
+
+    // Function to refresh page
+    function refreshPage() {
+      window.location.reload();
+    }
+
+    // Function to navigate to a page
+    function navigateToPage(url) {
+      window.location.href = url;
+    }
+
+    // Function to focus search
+    function focusSearch() {
+      document.getElementById('searchInput').focus();
+    }
+
+    // Function to show keyboard help
+    function showKeyboardHelp() {
+      keyboardHelpModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Close keyboard help modal
+    closeKeyboardHelp.addEventListener('click', function() {
+      keyboardHelpModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    keyboardHelpModal.addEventListener('click', function(e) {
+      if (e.target === keyboardHelpModal) {
+        keyboardHelpModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Keyboard event listener
+    document.addEventListener('keydown', function(e) {
+      // Check if Ctrl key is pressed
+      if (e.ctrlKey) {
+        // Prevent default behavior for these shortcuts
+        e.preventDefault();
+        
+        // Check which key was pressed
+        switch(e.key) {
+          case '1':
+            toggleSidebar();
+            break;
+          case '2':
+            openProfile();
+            break;
+          case '3':
+            logout();
+            break;
+          case '4':
+            refreshPage();
+            break;
+          case '5':
+            navigateToPage('media.html');
+            break;
+          case '6':
+            navigateToPage('ict.html');
+            break;
+          case '7':
+            navigateToPage('ass.html');
+            break;
+          case '8':
+            navigateToPage('lib.html');
+            break;
+          case '9':
+            navigateToPage('materials.html');
+            break;
+          case '0':
+            navigateToPage('quizzz.html');
+            break;
+          case 'l':
+          case 'L':
+            navigateToPage('livve.html');
+            break;
+          case 'g':
+          case 'G':
+            navigateToPage('games.html');
+            break;
+          case 'k':
+          case 'K':
+            focusSearch();
+            break;
+          case '?':
+            showKeyboardHelp();
+            break;
+        }
+      }
+    });
+
+    // Show keyboard help on first visit
+    if (!localStorage.getItem('keyboardHelpShown')) {
+      setTimeout(() => {
+        showKeyboardHelp();
+        localStorage.setItem('keyboardHelpShown', 'true');
+      }, 2000);
+    }
+    
+// Force light mode by overriding any dark mode variables
+  document.addEventListener('DOMContentLoaded', function() {
+    const root = document.documentElement;
+    
+    // Set all colors to light mode values
+    root.style.setProperty('--dark', '#111827');
+    root.style.setProperty('--light', '#f9fafb');
+    root.style.setProperty('--gray', '#6b7280');
+    root.style.setProperty('--gray-light', '#e5e7eb');
+    root.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.95)');
+    root.style.setProperty('--glass-border', 'rgba(255, 255, 255, 0.5)');
+    
+    // Also remove any dark mode class from body
+    document.body.classList.remove('dark-mode');
+  });
+
+// Open profile modal
+document.getElementById('profileLink').addEventListener('click', function(e) {
+  e.preventDefault();
+  document.getElementById('profileModal').style.display = 'flex';
+  document.body.classList.add('modal-open'); // Prevent background scrolling
+});
+
+// Close profile modal
+document.getElementById('closeProfileModal').addEventListener('click', function() {
+  document.getElementById('profileModal').style.display = 'none';
+  document.body.classList.remove('modal-open'); // Re-enable background scrolling
+});
+
+// Close modal when clicking outside
+document.getElementById('profileModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    this.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  }
+});
+  </script>
+  <script src="basa.js"></script>
+  <script src="darK.js"></script>
+  <script src="bzas.js"></script>
+  <script src="bvbv.js"></script>
+  <script src="base.js"></script>
+  <script src="m.js"></script>
+  <script src="mo.js"></script>
+  <script src="mod.js"></script>
+
+  <footer>
+    <p>© 2025 Onlearn Ethiopia | Designed For Educational Purposes</p>
+  </footer>
+</body>
+</html>
